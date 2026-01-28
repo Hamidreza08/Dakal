@@ -17,7 +17,7 @@ import { useUserIPInfo } from "~/hooks/useUserIPInfo";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import GitHubButton from 'react-github-btn';
-//import { useRouter } from 'next/router';
+
 const UserIP = dynamic(() => import("~/components/UserIP"), { ssr: false });
 
 const Home: NextPage = () => {
@@ -64,55 +64,33 @@ const Home: NextPage = () => {
     }
   }, [showToast, testNo]);
 
-    /*const router = useRouter();
-    useEffect(() => {
-        if (window.location.protocol === 'https:') {
-            window.location.href = `http://${window.location.host}${router.asPath}`;
-        }
-    }, []);*/
-
   if (!loaded) return;
 
   return (
     <>
       <Head>
-        <title>دکل | Dakal</title>
+        <title>Scanner</title>
         <meta
           name="description"
-          content="Cloudflare Scanner to find clean ip"
+          content="Cloudflare Scanner"
         />
         <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#f28119" />
+        <meta name="theme-color" content="#ffffff" />
         <meta
           name="viewport"
           content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
         />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <nav className="navbar navbar-inverse">
-        <div className="container">
-          <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
-            <a href=".">
-              <img src="img/cflogo.png?v1.1" alt="logo" />
-              <h1>بزن نفت دربیاد</h1>
-            </a>
-          </div>
-        </div>
-      </nav>
+      
+      {/* Borttagen Header/Meny härifrån */}
+
       <div className="clearfix"></div>
-      <div className="container">
+      <div className="container" style={{ marginTop: '20px' }}>
         <section className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
-          <ul className="nav nav-tabs">
-            <li>
-              <a href="https://ircf.space">معرفی</a>
-            </li>
-            <li className="active">
-              <a href="https://scanner.github1.cloud/">اسکنر</a>
-            </li>
-            <li className="pull-left">
-              <a href="https://ircf.space/contacts">تماس‌باما</a>
-            </li>
-          </ul>
+          
+          {/* Borttagna nav-tabs härifrån */}
+
           <div className="clearfix"></div>
           <div className="form-group">
             <label>
@@ -193,16 +171,7 @@ const Home: NextPage = () => {
                 </label>
             </div>
           <div className="clearfix"></div>
-          {/*<div className="alert alert-info">
-                        <UserIP
-                            ip={ipInfo.ipAddress}
-                            location={
-                                ipInfo.ipVersion === 4
-                                    ? ipInfo.regionName + ", " + ipInfo.countryName
-                                    : "..."
-                            }
-                        />
-                    </div>*/}
+          
           {!isRunning ? (
             <>
               {typeof ipInfo !== "undefined" ? (
@@ -289,16 +258,6 @@ const Home: NextPage = () => {
                   }
                 />
               )}
-              {/*<DocumentTextIcon
-                                onClick={() => download(validIPs, "json")}
-                                title="Download as JSON"
-                                className={
-                                    (validIPs.length > 0
-                                        ? "cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500 "
-                                        : "cursor-not-allowed text-gray-500 transition-colors duration-300 hover:text-gray-400 ") +
-                                    "mx-2 h-6 w-6"
-                                }
-                            />*/}
             </div>
           </div>
           {validIPs.length > 0 ? (
@@ -357,21 +316,13 @@ const Home: NextPage = () => {
               </a>
             </div>
           </div>
-          <div className="clearfix"></div>©{" "}
-          <a href="https://github.com/kiomarzsss/kscanner" target="_blank">
-            Kiomarzsss
-          </a>
-          , <a href="https://ircf.space" target="_blank">
-            IRCF
-          </a>, VahidFarid, goldSrc
+          <div className="clearfix"></div>
+           v2.0 Private
           <br />
             <span dir="ltr" className={"starBtn"}>
                 <GitHubButton href="https://github.com/kiomarzsss/kscanner" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-show-count="true" aria-label="Star kiomarzsss/kscanner on GitHub">Star</GitHubButton>
             </span>
           <br />
-            <div className="text-center">
-                <a href="https://ircf.space/contacts#donate" target="_blank" className="btn btn-link btn-normal btn-lg btn-outline donateLink">☕</a>
-            </div>
         </footer>
       </div>
     </>
