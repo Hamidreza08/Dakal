@@ -76,7 +76,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Cloudflare Scanner | اسکنر آیپی تمیز کلودفلر</title>
+        <title>دکل | Dakal</title>
         <meta
           name="description"
           content="Cloudflare Scanner to find clean ip"
@@ -94,7 +94,7 @@ const Home: NextPage = () => {
           <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
             <a href=".">
               <img src="img/cflogo.png?v1.1" alt="logo" />
-              <h1>اینترنت برای همه؛ یا هیچ‌کس!</h1>
+              <h1>بزن نفت دربیاد</h1>
             </a>
           </div>
         </div>
