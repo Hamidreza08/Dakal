@@ -290,7 +290,7 @@ const Home: NextPage = () => {
         </section>
         <div className="clearfix"></div>
         <footer className="text-center">
-           Private Scanner
+           ماچ و بده بیاد
         </footer>
       </div>
     </>
