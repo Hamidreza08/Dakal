@@ -12,7 +12,6 @@ import { allIps } from "~/consts";
 import { useUserIPInfo } from "~/hooks/useUserIPInfo";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import GitHubButton from 'react-github-btn';
 
 const UserIP = dynamic(() => import("~/components/UserIP"), { ssr: false });
 
@@ -244,7 +243,6 @@ const Home: NextPage = () => {
               <ArrowPathRoundedSquareIcon
                 className={`mx-2 inline-block h-6 w-6 transform-gpu text-center text-blue-600 duration-300 ${tryCharToRotation[tryChar]}`}
               />
-              {/* Nedladdningsknappen borttagen härifrån */}
             </div>
           </div>
           {validIPs.length > 0 ? (
@@ -292,24 +290,7 @@ const Home: NextPage = () => {
         </section>
         <div className="clearfix"></div>
         <footer className="text-center">
-          <div className="pwa">
-            <div className="pwa_icon">
-              🔒 Install <b>PWA</b> <em className="text-muted">or</em> Download{" "}
-              <a
-                href="https://github.com/kiomarzsss/kscanner/releases/latest"
-                target="_blank"
-              >
-                APK
-              </a>
-            </div>
-          </div>
-          <div className="clearfix"></div>
            Private Scanner
-          <br />
-            <span dir="ltr" className={"starBtn"}>
-                <GitHubButton href="https://github.com/kiomarzsss/kscanner" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-show-count="true" aria-label="Star kiomarzsss/kscanner on GitHub">Star</GitHubButton>
-            </span>
-          <br />
         </footer>
       </div>
     </>
