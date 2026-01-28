@@ -86,9 +86,9 @@ const Home: NextPage = () => {
       <div className="container" style={{ marginTop: '30px' }}>
         <section className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
           
-          {/* Här är texten du ville ha tillbaka, centrerad och snygg */}
-          <div className="text-center" style={{ marginBottom: '20px' }}>
-            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333' }}>بزن نفت دربیاد</h1>
+          {/* Rubriken högerställd och anpassad */}
+          <div style={{ textAlign: 'right', marginBottom: '15px' }}>
+            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333', margin: 0 }}>بزن نفت دربیاد</h1>
           </div>
 
           <div className="clearfix"></div>
