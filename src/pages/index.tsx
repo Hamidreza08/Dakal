@@ -2,9 +2,7 @@ import { type NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
-import { download } from "~/helpers/download";
 import {
-  TableCellsIcon,
   ArrowPathRoundedSquareIcon,
   PlayIcon,
   StopIcon,
@@ -86,7 +84,7 @@ const Home: NextPage = () => {
       <div className="container" style={{ marginTop: '30px' }}>
         <section className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
           
-          {/* Rubriken högerställd och anpassad */}
+          {/* Rubriken högerställd */}
           <div style={{ textAlign: 'right', marginBottom: '15px' }}>
             <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333', margin: 0 }}>بزن نفت دربیاد</h1>
           </div>
@@ -246,18 +244,7 @@ const Home: NextPage = () => {
               <ArrowPathRoundedSquareIcon
                 className={`mx-2 inline-block h-6 w-6 transform-gpu text-center text-blue-600 duration-300 ${tryCharToRotation[tryChar]}`}
               />
-              {validIPs.length > 0 && (
-                <TableCellsIcon
-                  onClick={() => download(validIPs, "csv")}
-                  title="Download as CSV"
-                  className={
-                    (validIPs.length > 0
-                      ? "cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500 "
-                      : "cursor-not-allowed text-gray-500 transition-colors duration-300 hover:text-gray-400 ") +
-                    "mx-2 h-6 w-6"
-                  }
-                />
-              )}
+              {/* Nedladdningsknappen borttagen härifrån */}
             </div>
           </div>
           {validIPs.length > 0 ? (
