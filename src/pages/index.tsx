@@ -5,9 +5,7 @@ import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
 import { download } from "~/helpers/download";
 import {
   TableCellsIcon,
-  DocumentTextIcon,
   ArrowPathRoundedSquareIcon,
-  MagnifyingGlassCircleIcon,
   PlayIcon,
   StopIcon,
 } from "@heroicons/react/24/solid";
@@ -83,13 +81,15 @@ const Home: NextPage = () => {
         <link rel="manifest" href="/manifest.json" />
       </Head>
       
-      {/* Borttagen Header/Meny härifrån */}
-
       <div className="clearfix"></div>
-      <div className="container" style={{ marginTop: '20px' }}>
+      
+      <div className="container" style={{ marginTop: '30px' }}>
         <section className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
           
-          {/* Borttagna nav-tabs härifrån */}
+          {/* Här är texten du ville ha tillbaka, centrerad och snygg */}
+          <div className="text-center" style={{ marginBottom: '20px' }}>
+            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333' }}>بزن نفت دربیاد</h1>
+          </div>
 
           <div className="clearfix"></div>
           <div className="form-group">
@@ -317,7 +317,7 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="clearfix"></div>
-           v2.0 Private
+           Private Scanner
           <br />
             <span dir="ltr" className={"starBtn"}>
                 <GitHubButton href="https://github.com/kiomarzsss/kscanner" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-show-count="true" aria-label="Star kiomarzsss/kscanner on GitHub">Star</GitHubButton>
