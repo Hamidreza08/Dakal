@@ -18,7 +18,7 @@ const UserIP = dynamic(() => import("~/components/UserIP"), { ssr: false });
 const Home: NextPage = () => {
   const { ipInfo } = useUserIPInfo();
   
-  // HÄR ÄR ÄNDRINGEN: showToast är borttagen från listan nedan
+  // showToast är borttagen här - korrekt!
   const {
     startScan,
     stopScan,
@@ -77,7 +77,8 @@ const Home: NextPage = () => {
         <section className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
           
           <div style={{ textAlign: 'right', marginBottom: '15px' }}>
-            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333', margin: 0 }}>بزن نفت دربیاد</h1>
+            {/* HÄR ÄR DEN NYA RUBRIKEN - VIKTIGT FÖR ATT SE ATT UPPDATERINGEN FUNGERAR */}
+            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333', margin: 0 }}>Dakal Unlimited v2</h1>
           </div>
 
           <div className="clearfix"></div>
