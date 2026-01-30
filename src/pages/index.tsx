@@ -51,14 +51,6 @@ const Home: NextPage = () => {
     setLoaded(true);
   }, []);
 
-  useEffect(() => {
-    if ( testNo >= 150 ) {
-        showToast().then(r => {
-            //
-        });
-    }
-  }, [showToast, testNo]);
-
   if (!loaded) return;
 
   return (
@@ -101,7 +93,7 @@ const Home: NextPage = () => {
                 }
                 disabled={isRunning}
                 min={1}
-                max={100}
+                max={100000} 
                 className="form-control dirLeft"
               />
             </label>
