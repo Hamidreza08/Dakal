@@ -55,7 +55,7 @@ function pick<T extends object, K extends keyof T>(base: T, ...keys: K[]) {
 }
 
 export const settingsInitialValues: Pick<ScannerStore, SettingKeys> = {
-    maxIPCount: 10000, // Ändrat standardvärde till högt för säkerhets skull
+    maxIPCount: 50000, // Standardvärde satt högt
     maxLatency: 1500,
     ipRegex: "",
     sniValue: "",
@@ -112,7 +112,7 @@ export const useScannerStore = create<ScannerStore>()(
             },
         }),
         {
-            name: "scanner-store",
+            name: "scanner-store-v3", // Bytt namn för att rensa gammal cache
             partialize: (state) =>
                 pick(
                     state,
@@ -147,15 +147,32 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
     async function startScan() {
         reset();
         try {
-            const ips = state.ipRegex
-                ? allIps.filter((el) => new RegExp(state.ipRegex).test(el))
-                : allIps;
-
             dispatch({ scanState: "scanning" });
-            await testIPs(randomizeElements(ips));
+
+            // --- EVIG LOOP HÄR ---
+            // Denna loop körs om och om igen tills du trycker stopp
+            while (getScanState() === "scanning") {
+                const ips = state.ipRegex
+                    ? allIps.filter((el) => new RegExp(state.ipRegex).test(el))
+                    : allIps;
+
+                // Om inga IPs finns att testa, bryt för att undvika krasch
+                if (!ips || ips.length === 0) break;
+
+                // Testa hela listan en gång
+                await testIPs(randomizeElements(ips));
+
+                // Kontrollera om vi är klara
+                if (getValidIPCount() >= state.maxIPCount) break;
+                if (getScanState() !== "scanning") break;
+                
+                // Om vi kommer hit, börjar while-loopen om från början!
+            }
+            
             setToIdle();
         } catch (e) {
             console.error(e);
+            setToIdle();
         }
     }
 
@@ -178,6 +195,9 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
             isSSL = true;
         }
         for (const ip of ipList) {
+            // Dubbelkolla att vi inte ska stoppa
+            if (getScanState() !== "scanning") break;
+
             increaseTestNo();
 
             let url = `http://${ip}:${state.portValue < 80 ? 80 : state.portValue}`;
@@ -238,8 +258,6 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
                 });
             }
 
-            // Denna loop bryts BARA om vi hittat tillräckligt många (Max Count) fungerande IP:n
-            // eller om användaren trycker på Stop.
             if (
                 getScanState() !== "scanning" ||
                 getValidIPCount() >= state.maxIPCount
@@ -253,6 +271,5 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
         ...state,
         startScan,
         stopScan,
-        // showToast är borttagen
     };
 };
