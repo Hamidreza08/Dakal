@@ -17,6 +17,8 @@ const UserIP = dynamic(() => import("~/components/UserIP"), { ssr: false });
 
 const Home: NextPage = () => {
   const { ipInfo } = useUserIPInfo();
+  
+  // HÄR ÄR ÄNDRINGEN: showToast är borttagen från listan nedan
   const {
     startScan,
     stopScan,
@@ -33,7 +35,6 @@ const Home: NextPage = () => {
     tryChar,
     validIPs,
     setSettings,
-    showToast,
   } = useIPScanner({ allIps });
 
   const isRunning = scanState !== "idle";
@@ -75,7 +76,6 @@ const Home: NextPage = () => {
       <div className="container" style={{ marginTop: '30px' }}>
         <section className="col-lg-6 col-md-8 col-sm-12 col-xs-12 col-centered">
           
-          {/* Rubriken högerställd */}
           <div style={{ textAlign: 'right', marginBottom: '15px' }}>
             <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#333', margin: 0 }}>بزن نفت دربیاد</h1>
           </div>
