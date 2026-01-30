@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { randomizeElements } from "~/helpers/randomizeElements";
 import axiosWithSNI from "./axiosWithSNI";
-import {toast} from "react-hot-toast";
 
 type ValidIP = {
     ip: string;
@@ -56,7 +55,7 @@ function pick<T extends object, K extends keyof T>(base: T, ...keys: K[]) {
 }
 
 export const settingsInitialValues: Pick<ScannerStore, SettingKeys> = {
-    maxIPCount: 5,
+    maxIPCount: 10000, // Ändrat standardvärde till högt för säkerhets skull
     maxLatency: 1500,
     ipRegex: "",
     sniValue: "",
@@ -140,9 +139,11 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
         getValidIPCount,
         ...state
     } = useScannerStore();
+    
     function setToIdle() {
         dispatch({ scanState: "idle", tryChar: "" });
     }
+
     async function startScan() {
         reset();
         try {
@@ -171,60 +172,6 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
         https: [443, 8443, 2053, 2083, 2087, 2096],
     };
 
-    async function reStart() {
-        toast.dismiss('limitation');
-        try {
-            const ips = state.ipRegex
-                ? allIps.filter((el) => new RegExp(state.ipRegex).test(el))
-                : allIps;
-
-            dispatch({ scanState: "scanning" });
-            await testIPs(randomizeElements(ips));
-            setToIdle();
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    async function showToast() {
-        toast(
-            (currentToast) => (
-                <span className="myToast">
-                    In each search, only 150 IPs are evaluated. Do you want to search deeper?
-                    <br />
-                    <div className={"myToastConfirm"}>
-                        <button
-                            data-act="cancel"
-                            onClick={() =>
-                                toast.dismiss(currentToast?.id)
-                            }
-                        >
-                            No
-                        </button>
-                        <button
-                            data-act="restart"
-                            onClick={() => {
-                                reStart();
-                            }}
-                        >
-                            Yes
-                        </button>
-                    </div>
-                </span>
-            ),
-            {
-                id: "limitation",
-                duration: Infinity,
-                position:"bottom-center",
-                style: {
-                    borderRadius: '10px',
-                    background: '#333',
-                    color: '#fff',
-                },
-            }
-        );
-    }
-
     async function testIPs(ipList: string[]) {
         let isSSL = false;
         if (state.sniValue !== '' && ports.https.includes(state.portValue)) {
@@ -245,6 +192,7 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
             const startTime = performance.now();
             const multiply = state.maxLatency <= 500 ? 1.5 : state.maxLatency <= 1000 ? 1.2 : 1;
             let timeout = 1.5 * multiply * state.maxLatency;
+            
             for (let i = 0; i < MAX_TRIES; i++) {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => {
@@ -278,18 +226,6 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
                     }
                 }
 
-                /*try {
-                    await fetch(url, {
-                        signal: controller.signal,
-                        //mode: 'no-cors'
-                    });
-
-                    testCount++;
-                } catch (error) {
-                    if (error instanceof Error && !["AbortError", "TypeError"].includes(error.name)) {
-                        testCount++;
-                    }
-                }*/
                 clearTimeout(timeoutId);
             }
 
@@ -302,6 +238,8 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
                 });
             }
 
+            // Denna loop bryts BARA om vi hittat tillräckligt många (Max Count) fungerande IP:n
+            // eller om användaren trycker på Stop.
             if (
                 getScanState() !== "scanning" ||
                 getValidIPCount() >= state.maxIPCount
@@ -315,6 +253,6 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
         ...state,
         startScan,
         stopScan,
-        showToast,
+        // showToast är borttagen
     };
 };
